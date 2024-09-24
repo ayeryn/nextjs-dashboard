@@ -233,3 +233,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 1. Create database (Postgres, MongoDB, etc.)
 2. Grab information like database URL and login credentials from database
 3. Provide info from above to `.env.local`
+
+### Seed the database
+
+Create a server-side endpoint that you can access in the browser to start populating the database. (`app/seed/route.ts`)
