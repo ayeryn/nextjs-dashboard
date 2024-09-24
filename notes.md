@@ -119,3 +119,13 @@ This code defines a React functional component in TypeScript called `InvoiceStat
      - If status is 'paid', the background will be green (`bg-green-500`), and the text will be white (`text-white`).
 
 In summary, this code sets up a basic functional component that accepts a `status` prop of type `string`.
+
+
+## Fonts and Images
+**Why Optimize Fonts?**
+- Fonts play a significant role in the design of a website, but using custom fonts in your prohect can affect **performance** if the font files need to be fetched and loaded.
+- `next/fonts` module for automatically optimizing fonts in the application.
+  - It downloads fint files at build tiume and hosts them with your other static assets
+  - This means when a user visits your application, there are no additional nextwork requests for fonts which would impact performance.
+
+  
