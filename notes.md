@@ -412,3 +412,30 @@ A route group can be created by wrapping a folder's name in parenthesis: `(folde
 ```
 
 Since URL is not affected, `/dashboard/(overview)/page.tsx` becomes `/dashboard`.
+
+### Grouping Components
+
+You can use this pattern when you want multiple components to load in at the same time.
+
+```js
+export default async function CardWrapper() {
+  const {
+    totalPaidInvoices,
+    totalPendingInvoices,
+    numberOfInvoices,
+    numberOfCustomers,
+  } = await fetchCardData();
+  return (
+    <>
+      <Card title="Collected" value={totalPaidInvoices} type="collected" />
+      <Card title="Pending" value={totalPendingInvoices} type="pending" />
+      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
+      <Card
+        title="Total Customers"
+        value={numberOfCustomers}
+        type="customers"
+      />
+    </>
+  );
+}
+```
