@@ -121,11 +121,23 @@ This code defines a React functional component in TypeScript called `InvoiceStat
 In summary, this code sets up a basic functional component that accepts a `status` prop of type `string`.
 
 
-## Fonts and Images
-**Why Optimize Fonts?**
-- Fonts play a significant role in the design of a website, but using custom fonts in your prohect can affect **performance** if the font files need to be fetched and loaded.
-- `next/fonts` module for automatically optimizing fonts in the application.
-  - It downloads fint files at build tiume and hosts them with your other static assets
+## Fonts
+### Why Optimize Fonts?
+Fonts play a significant role in the design of a website, but using custom fonts in your prohect can affect **performance** if the font files need to be fetched and loaded.
+### `next/fonts` 
+`next/fonts` is a module for automatically optimizing fonts in the application.
+  - It downloads font files at build tiume and hosts them with your other static assets
   - This means when a user visits your application, there are no additional nextwork requests for fonts which would impact performance.
 
   
+### Primary Font
+This is the font being used throughout the application and applied to the **`<body>`** tag.
+```js
+import { inter } from '@/app/ui/fonts'
+
+return ({
+  <html>
+    <body className={inter.className}>{children}</body>
+  </html>
+})
+````
