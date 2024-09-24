@@ -227,3 +227,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 - Any UI added to the root layout will be shared across all pages in your application.
 - You can use it to modify your `<html>` and `<body>` tags, and add metadata.
 - Since the layout above is unique to the `dashboard` pages, no additional changes are needed for the root layout.
+
+## Database Setup
+
+1. Create database (Postgres, MongoDB, etc.)
+2. Grab information like database URL and login credentials from database
+3. Provide info from above to `.env.local`
