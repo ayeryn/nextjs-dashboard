@@ -540,6 +540,12 @@ function handleSearch(term: string) {
 ```
 
 3. Keep the URL in sync with the input field
+   ```js
+   <input
+     ...
+     defaultValue={searchParams.get("query")?.toString()}
+   />
+   ```
 4. Update the table to reflect the search query
 
 #### Actions
