@@ -70,7 +70,7 @@ CSS Modules allow you tos cope CSS to a component by automatically creating uniq
 
 There may be cases where you may need to conditionally style an element based on state or some other condition.
 
-`clsx` is a library that lets you toggle class names easiy. ([Documentation](https://github.com/lukeed/clsx)).
+`clsx` is a library that lets you toggle class names easily. ([Documentation](https://github.com/lukeed/clsx)).
 Basic usage:
 
 - Suppose that you want to create an `InvoiceStatus` component which accepts `status`. the status can be `'pending'` or `'paid'`.
@@ -120,18 +120,23 @@ This code defines a React functional component in TypeScript called `InvoiceStat
 
 In summary, this code sets up a basic functional component that accepts a `status` prop of type `string`.
 
-
 ## Fonts
-### Why Optimize Fonts?
-Fonts play a significant role in the design of a website, but using custom fonts in your prohect can affect **performance** if the font files need to be fetched and loaded.
-### `next/fonts` 
-`next/fonts` is a module for automatically optimizing fonts in the application.
-  - It downloads font files at build tiume and hosts them with your other static assets
-  - This means when a user visits your application, there are no additional nextwork requests for fonts which would impact performance.
 
-  
+### Why optimize fonts?
+
+Fonts play a significant role in the design of a website, but using custom fonts in your project can affect **performance** if the font files need to be fetched and loaded.
+
+### `next/fonts`
+
+`next/fonts` is a module for automatically optimizing fonts in the application.
+
+- It downloads font files at build time and hosts them with your other static assets
+- This means when a user visits your application, there are no additional network requests for fonts which would impact performance.
+
 ### Primary Font
+
 This is the font being used throughout the application and applied to the **`<body>`** tag.
+
 ```js
 import { inter } from '@/app/ui/fonts'
 
@@ -140,4 +145,21 @@ return ({
     <body className={inter.className}>{children}</body>
   </html>
 })
-````
+```
+
+## Images
+
+### Why optimizes images?
+
+Next.js can serve **static assets**, like images, under the top-level `/public` folder. Files inside `/public` can be referenced in your application.
+
+Image optimization is a large topic in web dev that could be considered a specialization in itself.
+
+### The `<Image>` component
+
+The `<Image>` component is an extension of the HTML `<img>` tag, and comes with automatics image optimization, such as:
+
+- Preventing layout shift automatically when images are loading.
+- Resizing images to avoid shipping large images to devices with a smaller viewport.
+- Lazy loading images by default (images load as they enter the viewport).
+- Serving images in modern formats, like [WebP](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#webp) and [AVIF](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#avif_image), when the browser supports it.
