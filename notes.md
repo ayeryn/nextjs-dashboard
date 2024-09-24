@@ -468,6 +468,17 @@ The search function will span the client and server. When a user searches for an
 
 ### URL Search Params
 
+- `URLSearchParams` ([Doc](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams))
+- `URLSearchParams` objects are **iterable**, so they can directly be used in a `for...of` structure to iterate over key/value pairs in the same order as they appear in the query string, for example the following two lines are equivalent:
+
+  ```js
+  for (const [key, value] of mySearchParams) {
+  }
+
+  for (const [key, value] of mySearchParams.entries()) {
+  }
+  ```
+
 #### Benefits
 
 - **Bookmarkable and Shareable URLs**: Since the search parameters are in the URL, users can bookmark the current state of the application, including their search queries and filters, for future reference or sharing.
@@ -478,13 +489,101 @@ The search function will span the client and server. When a user searches for an
 
 - **`useSearchParam`**: allows you to access the parameters of the current URL.
   - For example, the search params for this URL `dashboard/invoices?page=1&query=pending` would look like this :`{page: '1', query: 'pending'}.`
-- **`usePathname`**: lets you read the current UR:'s pathname.
+- **`usePathname`**: lets you read the current URL's pathname.
   - For example, for the route `/dashboard/invoices`, `usePathname` would return `/dashboard/invoices`.
 - **`useRouter`**: enables navigation between routes within client components programmatically. There are [multiple methods](https://nextjs.org/docs/app/api-reference/functions/use-router#userouter).
+  - `replace()`
+    - similar to `push()`, but instead of adding a new entry in the browser's history (which happens with `push()`), it replaces the current entry. This means:
+      - The new URL replaces the current URL without adding a new history entry.
+      - If the user clicks the back button, they won’t go back to the old URL (because it was "replaced").
 
 #### Implementation Steps
 
 1. Capture the user's input
+
+   - use a function like `handleSearch` or `handleSubmit` to pass information from client to server. For example,
+
+   ```js
+   function handleSearch(term: string) {
+     // searches the database
+   }
+
+   <input
+     className="peer block w-full  border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+     placeholder={placeholder}
+     // every time the input changes, handleSearch is triggered
+     onChange={(e) => {
+       handleSearch(e.target.value);
+     }}
+   />;
+   ```
+
 2. Update the URL with the search params
+
+- Instead of creating a complex string literal, you can use it to get the params string like `?page=1&query=a`.
+
+```js
+import { useSearchParams } from "next/navigation";
+
+const searchParams = useSearchParams();
+function handleSearch(term: string) {
+  const params = new URLSearchParams(searchParams);
+
+  if (term) {
+    // If search is active, assign term to "query"
+    params.set("query", term);
+  } else {
+    // If term is empty, remove the "query" param
+    params.delete("query");
+  }
+}
+```
+
 3. Keep the URL in sync with the input field
 4. Update the table to reflect the search query
+
+#### Actions
+
+1. User puts text into the search bar
+2. the search bar is of `<input>` and has an event listener `onChange`
+   ```js
+   <input
+     className="..."
+     placeholder={placeholder}
+     onChange={(e) => {
+       handleSearch(e.target.value);
+     }}
+   />
+   ```
+3. `e.target.value`, aka the search text is passed onto function `handleSearch(term: string)` as param `term`.
+
+4. `handleSearch()` determines how to set the query in the URL
+
+   1. search parameters are updated in real-time when search term changes on the front end
+
+   ```js
+   export default function Search({ placeholder }: { placeholder: string }) {
+     const searchParams = useSearchParams();
+     const pathname = usePathname();
+     const { replace } = useRouter();
+
+     function handleSearch(term: string) {
+       // Construct utility to interact with searchParams
+       const params = new URLSearchParams(searchParams);
+
+       // Set params
+       if (term) {
+         params.set("query", term);
+       } else {
+         params.delete("query");
+       }
+
+       // Update URL with search params
+       replace(`${pathname}?${params.toString()}`);
+     }
+
+     return <>...</>;
+   }
+   ```
+
+5. Search
