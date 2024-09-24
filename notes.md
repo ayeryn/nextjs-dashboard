@@ -177,4 +177,39 @@ The `<Image>` component is an extension of the HTML `<img>` tag, and comes with 
 
 ### `page.tsx`
 
-`page.tsx` is a special file that exports a React component, and it's reqiored for the route to be accessible.
+`page.tsx` is a special file that exports a React component, and it's required for the route to be accessible.
+
+It will be automatically nested in a `<Layout />` as `{children}`
+
+### `layout.tsx`
+
+One benefit is that on navigation, only the page components update while the layout won't re-render. This is called [partial rendering](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering).
+
+```js
+// app/dashboard/layout.tsx
+
+// Import SideNav component
+import SideNav from "@/app/ui/dashboard/sidenav";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+      <div className="w-full flex-none md:w-64">
+        // SideNav won't re-render when route changes because it's in a layout.
+        <SideNav />
+      </div>
+      // children is a prop. It can either be a page or another layout
+      <div className="flex-grow p-6 md:overflow-y-auto md:p-12">{children}</div>
+    </div>
+  );
+}
+```
+
+#### `RootLayout`
+
+**`app/layout.tsx`**
+
+- This is a root layout and is **required**.
+- Any UI added to the root layout will be shared across all pages in your application.
+- You can use it to modify your `<html>` and `<body>` tags, and add metadata.
+- Since the layout above is unique to the `dashboard` pages, no additional changes are needed for the root layout.
