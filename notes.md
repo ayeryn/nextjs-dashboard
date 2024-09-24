@@ -11,7 +11,21 @@ $
 
 ### Project Structure
 
-- TODO: fill out
+```bash
+.(PROJECT)
+├── app
+│   ├── lib
+│   ├── ui
+├── public
+├── next.config.mjs
+└── ...
+```
+
+- `/app`: contains all the routes, components, and logic for your application.
+- `/app/lib`: contains functions used in your application, such as reusable utility functions and data fetching function.
+- `/app/ui`: contains all the UI components for your application, such as cards, tables, and forms.
+- `/public`: contains all the static assets for the application, such as images
+- **Config files**: such as `next.config.mjs`. Most are created by `create-next-app` and don't need to be modified.
 
 ## pnpm [1]
 
