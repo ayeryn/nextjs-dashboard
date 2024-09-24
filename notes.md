@@ -325,3 +325,27 @@ By using this pattern, you can:
 - Use a native JavaScript pattern that can be applied to any library or framework
 
 **What if one data request is lower than all the others?**
+
+## Rendering
+
+### Static Rendering
+
+Data fetching and rendering happens on the server at build time (when you deploy) or when [revalidating data](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data).
+
+Whenever a user visits the application, the cached result is served.
+**Benefits**:
+
+- **Faster Websites** - pre-rendered content can be cached and globally distributed. This ensures that users around the world can access your website's content more quickly and reliably.
+- **Reduced Server Load** - Because the content is cached, your server does not have to dynamically generate content for each user request.
+- **SEO** - Pre-rendered content is easier for search engine crawlers to index, as the content is already available when the page loads. This can lead to improved search engine rankings.
+
+Static rendering is useful for UI with **no data** or **data that is shared across users**, such as a static blog post or a product page. It might not be a good fit for a dashboard that has personalized data which is regularly updated.
+
+### Dynamic Rendering
+
+With dynamic rendering, content is rendered on the server for each user at request time (when the user visits the page).
+**Benefits**:
+
+- **Real-Time Data** - Dynamic rendering allows your application to display real-time or frequently updated data. This is ideal for applications where data changes often.
+- **User-Specific Content** - It's easier to serve personalized content, such as dashboards or user profiles, and update the data based on user interaction.
+- **Request Time Information** - Dynamic rendering allows you to access information that can only be known at request time, such as cookies or the URL search parameters.
