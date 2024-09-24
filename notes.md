@@ -236,4 +236,92 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 ### Seed the database
 
+**Seeding** is populating the database with an initial set of data.
+
+- It's useful when you want to have some data to work with as you build your application.
+
 Create a server-side endpoint that you can access in the browser to start populating the database. (`app/seed/route.ts`)
+
+## Fetching Data
+
+### API Layer
+
+APIS are an intermediary layer between your application code and database. There are a few cases where you might use an API:
+
+- If you're using 3rd party services that provide an API.
+- If you're fetching data from the client, you want to have an API layer that runs on the server to avoid exposing your database secrets to the client.
+
+### Database Queries
+
+When you're creating a full-stack application. you;ll also need to write logic to interact with your database. For relational databases like Postgres, you can do this with SQL or with an [ORM](https://vercel.com/docs/storage/vercel-postgres/using-an-orm).
+
+There are a few cases where you have to write database queries:
+
+- When creating your API endpoints, you need to write logic to interact with your database.
+- If you are using React Server Components (fetching data on the server), you can skip the API layer, and query your database directly without risking exposing your database secrets to the client.
+
+### Server Components
+
+By default, Next.js apps use **React Server Components**. Fetching data with Server Components is a relatively new approach and there are a few benefits of using them:
+
+- Server Components support promises, providing a simpler solution for asynchronous tasks like data fetching. You can use `async/await syntax `without reaching out for `useEffect`, `useState` or data fetching libraries.
+- Server Components execute on the server, so you can keep expensive data fetches and logic on the server and only send the result to the client.
+- As mentioned before, since Server Components execute on the server, you can query the database directly without an additional API layer.
+
+`page.tsx` uses a component and passes params into component
+
+1. component renders styles
+2. `/app/lib/data.ts` contains database functions that get data from database
+
+### SQL
+
+- SQL is the industry standard for querying relational databases (e.g. ORMs generate SQL under the hood).
+- Having a basic understanding of SQL can help you understand the fundamentals of relational databases, allowing you to apply your knowledge to other tools.
+- SQL is versatile, allowing you to fetch and manipulate specific data.
+- The Vercel Postgres SDK provides protection against SQL injections.
+
+### Request Waterfalls
+
+A waterfall refers to a sequence of network requests that depend on the completion of previous requests.
+In the case of data fetching, each request can only begin once the previous request has returned data. For example, we need to wait for the following fetching functions to execute in order.
+
+```js
+import { fetchCardData, fetchLatestInvoices, fetchRevenue } from "../lib/data";
+
+const revenue = await fetchRevenue();
+const latestInvoices = await fetchLatestInvoices();
+const {
+  totalPaidInvoices,
+  totalPendingInvoices,
+  numberOfInvoices,
+  numberOfCustomers,
+} = await fetchCardData();
+```
+
+### Parallel Data Fetching
+
+A common way to avoid waterfalls is to initiate all data requests at the same time - in parallel.
+
+In JavaScript, you can use the `Promise.all()` or `Promise.allSettled()` functions to initiate all promises at the same time. For example, in `data.ts`, we're using `Promise.all()` in the `fetchCardData()` function:
+
+```js
+const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
+const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
+const invoiceStatusPromise = sql`SELECT
+         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+         FROM invoices`;
+
+const data = await Promise.all([
+  invoiceCountPromise,
+  customerCountPromise,
+  invoiceStatusPromise,
+]);
+```
+
+By using this pattern, you can:
+
+- Start executing all data fetches at the same time, which can lead to performance gains.
+- Use a native JavaScript pattern that can be applied to any library or framework
+
+**What if one data request is lower than all the others?**

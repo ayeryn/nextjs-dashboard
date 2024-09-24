@@ -61,6 +61,7 @@ export async function fetchCardData() {
          FROM invoices`;
 
     const data = await Promise.all([
+      // Parallel fetching
       invoiceCountPromise,
       customerCountPromise,
       invoiceStatusPromise,
