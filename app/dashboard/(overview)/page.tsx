@@ -1,17 +1,19 @@
 import { lusitana } from "@/app/ui/fonts";
-import { fetchCardData, fetchLatestInvoices } from "@/app/lib/data";
+import { fetchCardData } from "@/app/lib/data";
 import RevenueChart from "@/app/ui/dashboard/revenue-chart";
 import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
 import { Card } from "@/app/ui/dashboard/cards";
 import { Suspense } from "react";
-import { RevenueChartSkeleton } from "@/app/ui/skeletons";
+import {
+  RevenueChartSkeleton,
+  LatestInvoicesSkeleton,
+} from "@/app/ui/skeletons";
 
 export default async function Page() {
   // Page is an async component. This allows you to use await to fetch data.
 
   // FIXME: The requests are creating an unintentional waterfall
   // FIXME: The dashboard is static, any data updates will not be reflected.
-  const latestInvoices = await fetchLatestInvoices();
   const {
     totalPaidInvoices,
     totalPendingInvoices,
@@ -38,7 +40,9 @@ export default async function Page() {
         <Suspense fallback={<RevenueChartSkeleton />}>
           <RevenueChart />
         </Suspense>
-        <LatestInvoices latestInvoices={latestInvoices} />
+        <Suspense fallback={<LatestInvoicesSkeleton />}>
+          <LatestInvoices />
+        </Suspense>
       </div>
     </main>
   );
