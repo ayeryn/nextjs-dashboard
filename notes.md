@@ -461,3 +461,30 @@ _\*Experimental feature in 14_
 In Next.js, if you call a [dynamic function](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#dynamic-functions) in a route (like querying your database), the _entire_ route becomes dynamic.
 
 However, most routes are not fully static or dynamic.
+
+## Search
+
+The search function will span the client and server. When a user searches for an invoice on the client, the URL params will be updated, data will be fetched on the server, and the table will re-render on the server with the new data.
+
+### URL Search Params
+
+#### Benefits
+
+- **Bookmarkable and Shareable URLs**: Since the search parameters are in the URL, users can bookmark the current state of the application, including their search queries and filters, for future reference or sharing.
+- **Server-Side Rendering and Initial Load**: URL parameters can be directly consumed on the server to render the initial state, making it easier to handle server rendering.
+- **Analytics and Tracking**: Having search queries and filters directly in the URL makes it easier to track user behavior without requiring additional client-side logic.
+
+#### Client Hooks
+
+- **`useSearchParam`**: allows you to access the parameters of the current URL.
+  - For example, the search params for this URL `dashboard/invoices?page=1&query=pending` would look like this :`{page: '1', query: 'pending'}.`
+- **`usePathname`**: lets you read the current UR:'s pathname.
+  - For example, for the route `/dashboard/invoices`, `usePathname` would return `/dashboard/invoices`.
+- **`useRouter`**: enables navigation between routes within client components programmatically. There are [multiple methods](https://nextjs.org/docs/app/api-reference/functions/use-router#userouter).
+
+#### Implementation Steps
+
+1. Capture the user's input
+2. Update the URL with the search params
+3. Keep the URL in sync with the input field
+4. Update the table to reflect the search query
