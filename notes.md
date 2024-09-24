@@ -550,6 +550,24 @@ function handleSearch(term: string) {
    ```
 4. Update the table to reflect the search query
 
+**Summary**:
+
+1. If you search for a term,
+2. you'll update the URL, which will send a new request to the server
+3. data will be fetched on the server
+
+#### When to use the `useSearchParams()` hook vs. the `searchParams` prop?
+
+Whether you use one or the other depends on whether you're working on the client or the server.
+
+- `<Search>` is a Client Component, so you used the `useSearchParams()` hook to access the params from the client.
+
+- `<Table>` is a Server Component that **fetches its own data**, so you can pass the `searchParams` prop from the page to the component.
+
+As a general rule,
+
+- To read the params from the **client**, use the `useSearchParams()` hook as this avoids having to go back to the server.
+
 #### Actions
 
 1. User puts text into the search bar
