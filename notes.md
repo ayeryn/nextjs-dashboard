@@ -464,6 +464,8 @@ However, most routes are not fully static or dynamic.
 
 ## Search
 
+[Next.js tutorial](https://nextjs.org/learn/dashboard-app/adding-search-and-pagination)
+
 The search function will span the client and server. When a user searches for an invoice on the client, the URL params will be updated, data will be fetched on the server, and the table will re-render on the server with the new data.
 
 ### URL Search Params
@@ -592,4 +594,34 @@ function handleSearch(term: string) {
    }
    ```
 
-5. Search
+5. The page receives the `searchParams` prop and passes `query` and `page` to `<Table>` component
+
+   ```js
+   // invoices/page.tsx
+
+   export default async function Page({
+     searchParams,
+   }: {
+     searchParams?: {
+       query?: string,
+       page?: string,
+     },
+   }) {
+     const query = searchParams?.query || "";
+     const currentPage = Number(searchParams?.page) || 1;
+
+     return (
+       <Suspense key={query + currentPage} fallback={<InvoiceSkeleton />}>
+         <Table query={query} currentPage={currentPage} />
+       </Suspense>
+     );
+   }
+   ```
+
+6. `<Table>` calls a server function `fetchFilteredInvoices()`.
+
+   ```js
+   // components/ui/invoices/table.tsx
+
+   const invoices = await fetchFilteredInvoices(query, currentPage);
+   ```

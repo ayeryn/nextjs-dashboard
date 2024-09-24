@@ -5,7 +5,25 @@ import Search from "@/app/ui/search";
 import { InvoiceSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 
-export default async function Page() {
+/**
+ * @param {Object} props - The props object passed to the page component.
+ * @param {Object} [props.searchParams] - An optional object containing query parameters from the URL.
+ * @param {string} [props.searchParams.query] - An optional search query parameter used to filter or search content.
+ * @param {string} [props.searchParams.page] - An optional page parameter used for pagination, representing the current page number.
+ *
+ * @returns {JSX.Element} - The rendered page component.
+ */
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -15,9 +33,9 @@ export default async function Page() {
         <Search placeholder="Search invoices..." />
         <CreateInvoice />
       </div>
-      {/* <Suspense key={query + currentPage} fallback={<InvoiceSkeleton />}>
+      <Suspense key={query + currentPage} fallback={<InvoiceSkeleton />}>
         <Table query={query} currentPage={currentPage} />
-      </Suspense> */}
+      </Suspense>
       <div className="mt-5 flex w-full justify-center">
         {/* <Pagination /> */}
       </div>
