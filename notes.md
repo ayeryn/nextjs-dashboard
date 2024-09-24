@@ -9,6 +9,10 @@ $ npx create-next-app@latest [options] <project-folder-path>
 $
 ```
 
+### Project Structure
+
+- TODO: fill out
+
 ## pnpm [1]
 
 pnpm (performant Node package manager) is a modern package manager for JavaScript that offers significant advantages over traditional tools like npm and Yarn. Here are the key features and benefits of using pnpm:
