@@ -378,3 +378,37 @@ export default function Loading() {
 
 - Since `<SideNav>` is static, it's shown immediately. The user can interact with <SideNav> while the dynamic content is loading.
 - The user doesn't have to wait for the page to finish loading before navigating away (this is called interruptable navigation).
+
+### [Route Groups](https://nextjs.org/docs/app/building-your-application/routing/route-groups)
+
+In the `app` directory, nested folders are normally mapped to URL paths. However, you can mark a folder as a Route Group to prevent the folder from being included in the route's URL path.
+
+This allows you to organize your route segments and project files into logical groups without affecting the URL path structure.
+
+Route groups are useful for:
+
+- Organizing routes into groups e.g. by site section, intent, or team.
+- Enabling nested layouts in the same route segment level:
+  - Creating multiple nested layouts in the same segment, including multiple root layouts
+  - Adding a layout to a subset of routes in a common segment
+
+#### Convention
+
+A route group can be created by wrapping a folder's name in parenthesis: `(folderName)`
+
+```bash
+├── app
+│   ├── dashboard
+│   │   ├── (overview)
+│   │   │   ├── loading.tsx
+│   │   │   └── page.tsx
+│   │   ├── customers
+│   │   │   └── page.tsx
+│   │   ├── invoices
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   ├── layout.tsx
+└── ...
+```
+
+Since URL is not affected, `/dashboard/(overview)/page.tsx` becomes `/dashboard`.
