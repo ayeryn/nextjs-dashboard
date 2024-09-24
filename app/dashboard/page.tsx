@@ -8,6 +8,8 @@ import { Card } from "../ui/dashboard/cards";
 export default async function Page() {
   // Page is an async component. This allows you to use await to fetch data.
 
+  // FIXME: The requests are creating an unintentional waterfall
+  // FIXME: The dashboard is static, any data updates will not be reflected.
   const revenue = await fetchRevenue();
   const latestInvoices = await fetchLatestInvoices();
   const {
