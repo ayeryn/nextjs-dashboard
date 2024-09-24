@@ -1,5 +1,58 @@
 # Notes
 
+- [Notes](#notes)
+  - [Project](#project)
+    - [Create New Project](#create-new-project)
+    - [Project Structure](#project-structure)
+  - [pnpm 1](#pnpm-1)
+    - [Key Features of pnpm](#key-features-of-pnpm)
+    - [Downsides of pnpm](#downsides-of-pnpm)
+    - [Commands](#commands)
+  - [CSS Styling](#css-styling)
+    - [Tailwind CSS](#tailwind-css)
+    - [CSS Modules](#css-modules)
+    - [`clsx` (Conditional Styling)](#clsx-conditional-styling)
+      - [Code Snippet](#code-snippet)
+  - [Fonts](#fonts)
+    - [Why optimize fonts?](#why-optimize-fonts)
+    - [`next/fonts`](#nextfonts)
+    - [Primary Font](#primary-font)
+  - [Images](#images)
+    - [Why optimizes images?](#why-optimizes-images)
+    - [The `<Image>` component](#the-image-component)
+  - [Layout and Pages](#layout-and-pages)
+    - [Nested Routing](#nested-routing)
+    - [`page.tsx`](#pagetsx)
+    - [`layout.tsx`](#layouttsx)
+      - [`RootLayout`](#rootlayout)
+  - [Database Setup](#database-setup)
+    - [Seed the database](#seed-the-database)
+  - [Fetching Data](#fetching-data)
+    - [API Layer](#api-layer)
+    - [Database Queries](#database-queries)
+    - [Server Components](#server-components)
+    - [SQL](#sql)
+    - [Request Waterfalls](#request-waterfalls)
+    - [Parallel Data Fetching](#parallel-data-fetching)
+  - [Rendering](#rendering)
+    - [Static Rendering](#static-rendering)
+    - [Dynamic Rendering](#dynamic-rendering)
+  - [Streaming](#streaming)
+    - [`loading.tsx`](#loadingtsx)
+    - [Route Groups](#route-groups)
+      - [Convention](#convention)
+    - [Grouping Components](#grouping-components)
+    - [Where to place Suspense boundaries](#where-to-place-suspense-boundaries)
+    - [Partial Prerendering (PPR)](#partial-prerendering-ppr)
+  - [Search](#search)
+    - [URL Search Params](#url-search-params)
+      - [Benefits](#benefits)
+      - [Client Hooks](#client-hooks)
+      - [Implementation Steps](#implementation-steps)
+      - [When to use the `useSearchParams()` hook vs. the `searchParams` prop?](#when-to-use-the-usesearchparams-hook-vs-the-searchparams-prop)
+      - [Actions](#actions)
+    - [Debouncing](#debouncing)
+
 ## Project
 
 ### Create New Project
@@ -643,3 +696,5 @@ As a general rule,
 
    const invoices = await fetchFilteredInvoices(query, currentPage);
    ```
+
+### Debouncing
