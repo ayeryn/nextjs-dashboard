@@ -335,9 +335,9 @@ Data fetching and rendering happens on the server at build time (when you deploy
 Whenever a user visits the application, the cached result is served.
 **Benefits**:
 
-- **Faster Websites** - pre-rendered content can be cached and globally distributed. This ensures that users around the world can access your website's content more quickly and reliably.
+- **Faster Websites** - prerendered content can be cached and globally distributed. This ensures that users around the world can access your website's content more quickly and reliably.
 - **Reduced Server Load** - Because the content is cached, your server does not have to dynamically generate content for each user request.
-- **SEO** - Pre-rendered content is easier for search engine crawlers to index, as the content is already available when the page loads. This can lead to improved search engine rankings.
+- **SEO** - prerendered content is easier for search engine crawlers to index, as the content is already available when the page loads. This can lead to improved search engine rankings.
 
 Static rendering is useful for UI with **no data** or **data that is shared across users**, such as a static blog post or a product page. It might not be a good fit for a dashboard that has personalized data which is regularly updated.
 
@@ -439,3 +439,25 @@ export default async function CardWrapper() {
   );
 }
 ```
+
+### Where to place Suspense boundaries
+
+1. How you want the user to experience the page as it streams
+2. What content you want to prioritize
+3. If the components rely on data fetching
+
+In the example of the dashboard page:
+
+- You could stream the **whole page** like we did with `loading.tsx`... but that may lead to a longer loading time if one of the components has a slow data fetch.
+- You could stream **every component** individually... but that may lead to UI popping into the screen as it becomes ready.
+- You could also create a staggered effect by streaming **page sections**. But you'll need to create wrapper components.
+
+Where you place your suspense boundaries will vary depending on your application. In general, it's good practice to **move your data fetches down to the components that need it, and then wrap those components in Suspense**. But there is nothing wrong with streaming the sections or the whole page if that's what your application needs.
+
+### Partial Prerendering (PPR)
+
+_\*Experimental feature in 14_
+
+In Next.js, if you call a [dynamic function](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#dynamic-functions) in a route (like querying your database), the _entire_ route becomes dynamic.
+
+However, most routes are not fully static or dynamic.
