@@ -756,5 +756,6 @@ export default function Page() {
 3. Inside your Server Action, extract the data from the `formData` object
    1. [Methods](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append)
 4. Validate and prepare the data to be inserted into your database.
+   1. [Zod](https://zod.dev/): a Typescript-first validation library that can simplify type validation)
 5. Insert the data and handle any errors.
 6. Revalidate the cache and redirect the user back to invoices page.
