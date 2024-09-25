@@ -1,6 +1,15 @@
+import { Metadata } from "next";
 import SideNav from "../ui/dashboard/sidenav";
 
 export const experimental_ppr = true;
+
+export const metadata: Metadata = {
+  // title: "Dash",
+  title: {
+    template: "%s | Acme Dashboard",
+    default: "Dash | Acme Dashboard",
+  },
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
