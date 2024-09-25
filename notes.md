@@ -52,6 +52,7 @@
       - [When to use the `useSearchParams()` hook vs. the `searchParams` prop?](#when-to-use-the-usesearchparams-hook-vs-the-searchparams-prop)
       - [Actions](#actions)
     - [Debouncing](#debouncing)
+      - [How it works](#how-it-works)
 
 ## Project
 
@@ -698,3 +699,13 @@ As a general rule,
    ```
 
 ### Debouncing
+
+**Debouncing** is a programming practice that limits the rate at which a function can fire. In our case, you only want to query the database when the user has stopped typing.
+
+- `use-debounce` [library](https://www.npmjs.com/package/use-debounce)
+
+#### How it works
+
+1. **Trigger Event**: When an event that should be debounced (like a keystroke in the search box) occurs, a timer starts.
+2. **Wait**: If a new event occurs before the timer expires, the timer is reset.
+3. **Execution**: If the time reaches the end of its countdown, the debounced function is executed.
