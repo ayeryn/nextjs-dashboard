@@ -64,6 +64,7 @@
   - [Error Handling](#error-handling)
     - [`try/catch`](#trycatch)
     - [`error.tsx`](#errortsx)
+    - [Handling `404` with `notFound` function](#handling-404-with-notfound-function)
 
 ## Client vs. Server
 
@@ -836,3 +837,11 @@ The file can be used to define a UI boundary for a route segment. It servers as 
 - It accepts two props
   - `error`: this object is an instance of JS's native [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) **object**.
   - `reset`: this is a **function** to reset the error boundary. When executed, the function will try to re-render the route segment.
+
+### Handling `404` with `notFound` function
+
+While `error.tsx` is useful for catching **all** errors, `notFound` can be used when you try to fetch a resource that doesn't exist.
+
+`notFound` takes precedence over `error.tsx`.
+
+[Example `not-found.tsx`](/app/dashboard/invoices/[id]/edit/not-found.tsx)
