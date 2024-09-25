@@ -58,6 +58,7 @@
     - [Server Actions](#server-actions)
     - [Using forms](#using-forms)
       - [Creating an invoice](#creating-an-invoice)
+      - [Updating an invoice](#updating-an-invoice)
 
 ## Client vs. Server
 
@@ -760,3 +761,11 @@ export default function Page() {
 5. Insert the data and handle any errors.
    1. `revalidatePath` to clear the cache and trigger a new request to the server. [Doc](https://nextjs.org/docs/app/api-reference/functions/revalidatePath)
 6. Revalidate the cache and redirect the user back to invoices page.
+
+#### Updating an invoice
+
+1. Create a new dynamic route segment with the invoice `id`.
+2. Read the invoice `id` from the page params.
+3. Fetch the specific invoice from your database.
+4. Pre-populate the form with the invoice data.
+5. Update the invoice data in your database.
