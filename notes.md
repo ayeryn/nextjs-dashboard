@@ -69,6 +69,10 @@
   - [Form Validation](#form-validation)
     - [Client-Side](#client-side)
       - [`required` attribute (simplest)](#required-attribute-simplest)
+    - [Server-Side](#server-side)
+      - [`useActionState` hook](#useactionstate-hook)
+      - [Use `zod` to validate before DB insertion](#use-zod-to-validate-before-db-insertion)
+      - [Add Error Display](#add-error-display)
 
 ## Client vs. Server
 
@@ -551,7 +555,7 @@ The search function will span the client and server. When a user searches for an
   ```js
   for (const [key, value] of mySearchParams) {
   }
-
+  
   for (const [key, value] of mySearchParams.entries()) {
   }
   ```
@@ -715,7 +719,7 @@ As a general rule,
 
    ```js
    // components/ui/invoices/table.tsx
-
+   
    const invoices = await fetchFilteredInvoices(query, currentPage);
    ```
 
@@ -877,3 +881,86 @@ This is generally okay because some ATs support browser validation.
   className="..."
   required />
 ```
+
+### Server-Side
+
+By validating on the server, you can:
+
+- Ensure your data is in the expected format _before_ sending it to your database.
+- Reduce the risk of malicious users bypassing client-side validation.
+- Have **one** source of truth for what is considered _valid_ data.
+
+#### `useActionState` hook
+
+- Takes two arguments: `(action, initialState)`.
+- Returns two values: `[state, formAction]`
+  - the form state, and
+  - a function to be called when the form is submitted
+
+#### Use `zod` to validate before DB insertion
+
+- `safeParse()`
+
+  - Failed:
+
+    ```json
+    { success: false, error: [Getter] }
+    ```
+
+  - Success:
+
+    ```json
+    {
+      "success": true,
+      "data": {
+        "customerId": "3958dc9e-712f-4377-85e9-fec4b6a6442a",
+        "amount": 123.32,
+        "status": "paid"
+      }
+    }
+    ```
+
+#### Add Error Display
+
+```js
+// ui/invoices/create-form.tsx
+
+<div className="relative">
+  <select
+    id="customer"
+    name="customerId"
+    className="..."
+    defaultValue=""
+    aria-describedby="customer-error">
+  </select>
+</div>
+
+// Add error display
+// div.id == select.aria-describedby
+<div id="customer-error" aria-live="polite" aria-atomic="true">
+  {state.errors?.customerId &&
+    state.errors.customerId.map((error: string) => (
+      <p className="mt-2 text-sm text-red-500" key={error}>
+        {error}
+      </p>
+    ))}
+</div>
+```
+
+- `aria-describedby= customer-error`: This establishes a relationship between the `select` element and the error message container. It indicates that the container with `id=customer-error` describes the `select` element
+  - Screen readers will read this description when the user interacts with the `select` box to notify them of errors
+- `id="customer-error"`: This `id` attribute uniquely identifies the HTML element that holds the error message for the `select` input.
+- `aria-live="polite"`: The screen reader should politely notify the user when the error inside the `div` is updated.
+  - When the content changes (e.g. when a user corrects an error), the screen reader will announce these changes, but only when the user is idle so as not to interrupt them.
+- `aria-live`:
+  1. **`polite`**: Updates to the element will be announced to the user, but only when they are not busy. This is the least intrusive option, allowing users to finish their current tasks without interruption.
+  2. **`assertive`**: Updates will be announced immediately, interrupting the user if necessary. This is used for critical updates that the user needs to be aware of right away.
+  3. **`off`**: Updates will not be announced at all. This is useful for content that does not require user attention.
+
+#### Sidebar - ARIA :eyes:
+
+- [Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+- Accessible Rich Internet Applications
+- A set of [roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) and [attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes) that define ways to make web content and web applications (especially those developed with JavaScript) more accessible to people with disabilities.
+- It supplements HTML so that interactions and widgets commonly used in applications can be passed to assistive technologies when there is not otherwise a mechanism. For example, ARIA enables accessible JavaScript widgets, form hints and error messages, live content updates, and more.
+
