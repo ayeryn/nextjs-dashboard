@@ -54,7 +54,10 @@
       - [Actions](#actions)
     - [Debouncing](#debouncing)
       - [How it works](#how-it-works)
-  - [Pagination](#pagination)
+  - [Mutating Data](#mutating-data)
+    - [Server Actions](#server-actions)
+    - [Using forms](#using-forms)
+      - [Creating an invoice](#creating-an-invoice)
 
 ## Client vs. Server
 
@@ -717,4 +720,40 @@ As a general rule,
 2. **Wait**: If a new event occurs before the timer expires, the timer is reset.
 3. **Execution**: If the time reaches the end of its countdown, the debounced function is executed.
 
-## Pagination
+## Mutating Data
+
+### Server Actions
+
+React Server Actions allow you to run asynchronous code directly on the server. They eliminate the need to create API endpoints to mutate your data. Instead, you write asynchronous functions that execute on the server and can be invoked from your Client or Server components.
+
+### Using forms
+
+In React, you can use the `action` attribute in the `<form>` element to invoke actions. The action will automatically receive the native `FormData` object, containing the captured data.
+
+For example,
+
+```js
+// Server Component
+export default function Page() {
+  // Action
+  async function create(formData: FormData) {
+    "use server";
+
+    // Logic to mutate data...
+  }
+
+  // Invoke the action using the "action" attribute
+  return <form action={create}>...</form>;
+}
+```
+
+**Progressive Enhancement**: forms work even if JS is disabled on the client.
+
+#### Creating an invoice
+
+1. Create a form to capture the user's input.
+2. Create a Server Action and invoke it from the form.
+3. Inside your Server Action, extract the data from the `formData` object
+4. Validate and prepare the data to be inserted into your database.
+5. Insert the data and handle any errors.
+6. Revalidate the cache and redirect the user back to invoices page.
