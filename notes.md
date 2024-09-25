@@ -931,7 +931,7 @@ By validating on the server, you can:
     name="customerId"
     className="..."
     defaultValue=""
-    aria-describedby="customer-error">
+    aria-describedby="customer-error">  // indicates the container
   </select>
 </div>
 
@@ -949,13 +949,28 @@ By validating on the server, you can:
 
 - `aria-describedby= customer-error`: This establishes a relationship between the `select` element and the error message container. It indicates that the container with `id=customer-error` describes the `select` element
   - Screen readers will read this description when the user interacts with the `select` box to notify them of errors
+
 - `id="customer-error"`: This `id` attribute uniquely identifies the HTML element that holds the error message for the `select` input.
+
 - `aria-live="polite"`: The screen reader should politely notify the user when the error inside the `div` is updated.
   - When the content changes (e.g. when a user corrects an error), the screen reader will announce these changes, but only when the user is idle so as not to interrupt them.
+
 - `aria-live`:
+
   1. **`polite`**: Updates to the element will be announced to the user, but only when they are not busy. This is the least intrusive option, allowing users to finish their current tasks without interruption.
   2. **`assertive`**: Updates will be announced immediately, interrupting the user if necessary. This is used for critical updates that the user needs to be aware of right away.
   3. **`off`**: Updates will not be announced at all. This is useful for content that does not require user attention.
+
+- `aria-atomic`: indicates whether assistive technologies such as a screen reader will present all
+
+  - [`false`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic#false) (default)
+
+    present only the changed node or nodes.
+
+  - [`true`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic#true)
+
+    present the entire changed region as a whole, including the author-defined label if one exists.
+
 
 #### Sidebar - ARIA :eyes:
 
