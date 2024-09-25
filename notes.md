@@ -59,6 +59,7 @@
     - [Using forms](#using-forms)
       - [Creating an invoice](#creating-an-invoice)
       - [Updating an invoice](#updating-an-invoice)
+      - [Deleting an invoice](#deleting-an-invoice)
 
 ## Client vs. Server
 
@@ -783,3 +784,8 @@ export default function Page() {
    const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
    return <form action={updateInvoiceWithId}></form>;
    ```
+
+#### Deleting an invoice
+
+1. Pass `id` to `deleteInvoice` server action
+2. Create binding for `deleteInvoice` with `id`
