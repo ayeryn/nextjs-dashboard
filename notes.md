@@ -61,13 +61,15 @@
       - [Updating an invoice](#updating-an-invoice)
       - [Deleting an invoice](#deleting-an-invoice)
     - [Summary](#summary)
+  - [Error Handling](#error-handling)
+    - [`try/catch`](#trycatch)
 
 ## Client vs. Server
 
 - We don't want to fetch from database from client components, because it will expose database secrets
 - Pages are usually server components from which we can make database requests and pass stuff to client components
 
-## Project
+## [Project](https://nextjs.org/learn/dashboard-app/)
 
 ### Create New Project
 
@@ -797,3 +799,28 @@ export default function Page() {
 - `revalidatePath` to revalidate the cache
 - `redirect` to redirect the user to a new page
 - _further reading_: [link](https://nextjs.org/blog/security-nextjs-server-components-actions)
+
+## Error Handling
+
+### `try/catch`
+
+```js
+// try/catch block
+try {
+  await sql`
+    UPDATE invoices
+    SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+    WHERE id = ${id}
+  `;
+} catch (error) {
+  return { message: "Database error: Failed to update invoice." };
+}
+
+revalidatePath("dashboard/invoices");
+redirect("/dashboard/invoices");
+```
+
+`redirect` is outside
+
+- It works by throwing an error, which would be caught by the `catch` block. Meaning an error reaches `redirect` as well.
+- To avoid this, call `redirect` **after** `try/catch` so it's only reachable if `try` succeeds
