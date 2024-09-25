@@ -66,6 +66,9 @@
     - [`error.tsx`](#errortsx)
     - [Handling `404` with `notFound` function](#handling-404-with-notfound-function)
   - [Accessibility](#accessibility)
+  - [Form Validation](#form-validation)
+    - [Client-Side](#client-side)
+      - [`required` attribute (simplest)](#required-attribute-simplest)
 
 ## Client vs. Server
 
@@ -854,3 +857,23 @@ While `error.tsx` is useful for catching **all** errors, `notFound` can be used 
 - [`eslint-plugin-jsx-ally`](https://www.npmjs.com/package/eslint-plugin-jsx-a11y)
   - Catches accessibility issues early
   - For example, it warns if you have images without `alt` text, use the `aria-\*` and `role` attributes incorrectly,
+
+## Form Validation
+
+### Client-Side
+
+#### `required` attribute (simplest)
+
+The simplest would be to rely on the form validation provided by the browser by adding the `required` attribute to the `<input>` and `<select>` elements in your forms.
+
+This is generally okay because some ATs support browser validation.
+
+```html
+<input
+  id="amount"
+  name="amount"
+  type="number"
+  placeholder="Enter USD amount"
+  className="..."
+  required />
+```
