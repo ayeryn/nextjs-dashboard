@@ -81,6 +81,9 @@
     - [Password Hashing](#password-hashing)
     - [Credentials provider](#credentials-provider)
     - [Steps](#steps)
+  - [Metadata](#metadata)
+    - [Common Types](#common-types)
+    - [Adding Metadata](#adding-metadata)
 
 ## Client vs. Server
 
@@ -1015,6 +1018,28 @@ Callbacks are asynchronous functions you can use to <ins>control what happens wh
 3. Protecting routes with Middleware
 4. Add providers
 
+## Metadata
+
+Metadata plays a significant role in enhancing a webpage's SEO, making it more accessible and understandable for search engines and social media platforms.
+Proper metadata helps search engines effectively index webpages, improving their ranking in search results. Additionally, metadata like Open Graph improves the appearance of shared links on social media, making the content more appealing and informative for users.
+
+### Common Types
+
+- title
+- description
+- keyword
+- open graph
+- favicon
+
+### Adding Metadata
+
+1. **Config-based**: Export a [static `metadata` object][34] or a dynamic [`generateMetadata` function][35] in a `layout.js` or `page.js` file.
+2. **File-based**: specials files like:
+   1. `favicon.ico`, `apple-icon.jpg`, and `icon.jpg`: Utilized for favicons and icons
+   2. `opengraph-image.jpg` and `twitter-image.jpg`: Employed for social media images
+   3. `robots.txt`: Provides instructions for search engine crawling
+   4. `sitemap.xml`: Offers information about the website's structure
+
 [1]: https://nextjs.org/learn/dashboard-app/
 [2]: https://pnpm.io
 [3]: https://github.com/lukeed/clsx
@@ -1049,3 +1074,5 @@ Callbacks are asynchronous functions you can use to <ins>control what happens wh
 [31]: https://authjs.dev/reference/nextjs#nextauthconfig
 [32]: https://nextjs.org/docs/app/building-your-application/routing/middleware
 [33]: https://authjs.dev/getting-started/providers/credentials-tutorial
+[34]: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadata-object
+[35]: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
