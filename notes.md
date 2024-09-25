@@ -758,4 +758,5 @@ export default function Page() {
 4. Validate and prepare the data to be inserted into your database.
    1. [Zod](https://zod.dev/): a Typescript-first validation library that can simplify type validation)
 5. Insert the data and handle any errors.
+   1. `revalidatePath` to clear the cache and trigger a new request to the server. [Doc](https://nextjs.org/docs/app/api-reference/functions/revalidatePath)
 6. Revalidate the cache and redirect the user back to invoices page.
