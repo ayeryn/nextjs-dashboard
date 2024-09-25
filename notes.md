@@ -63,6 +63,7 @@
     - [Summary](#summary)
   - [Error Handling](#error-handling)
     - [`try/catch`](#trycatch)
+    - [`error.tsx`](#errortsx)
 
 ## Client vs. Server
 
@@ -824,3 +825,14 @@ redirect("/dashboard/invoices");
 
 - It works by throwing an error, which would be caught by the `catch` block. Meaning an error reaches `redirect` as well.
 - To avoid this, call `redirect` **after** `try/catch` so it's only reachable if `try` succeeds
+
+### [`error.tsx`](https://nextjs.org/docs/app/api-reference/file-conventions/error)
+
+The file can be used to define a UI boundary for a route segment. It servers as a **catch-all** for unexpected errors and allows you to display a fallback UI to your users.
+
+[Example page](app/dashboard/invoices/error.tsx)
+
+- `'use client'`: it needs to be a Client Component
+- It accepts two props
+  - `error`: this object is an instance of JS's native [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) **object**.
+  - `reset`: this is a **function** to reset the error boundary. When executed, the function will try to re-render the route segment.
