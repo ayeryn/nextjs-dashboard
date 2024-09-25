@@ -4,7 +4,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   // This will be automatically added to the web app
-  title: "NextJS Dashboard",
+  title: {
+    template: "%s | Acme Dashboard",
+    default: "Acme Dashboard",
+  },
   description: "This is a NextJS 14 project with typescript",
   metadataBase: new URL("https://next-learn-dashboard.vercel.sh'"),
 };

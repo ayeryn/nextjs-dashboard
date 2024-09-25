@@ -1043,6 +1043,7 @@ Export a [static `metadata` object][34] or a dynamic [`generateMetadata` functio
 - Ability to add a custom title for a specific page
   - Add a `metadata` object to the page itself
 - Metadata in nested pages will override the metadata in the parent
+- `title.template`: simplifies updating title for every page
 
 #### File-based
 
