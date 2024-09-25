@@ -70,9 +70,11 @@
     - [Client-Side](#client-side)
       - [`required` attribute (simplest)](#required-attribute-simplest)
     - [Server-Side](#server-side)
-      - [`useActionState` hook](#useactionstate-hook)
+      - [`useActionState` hook on `<Form />`](#useactionstate-hook-on-form-)
       - [Use `zod` to validate before DB insertion](#use-zod-to-validate-before-db-insertion)
       - [Add Error Display](#add-error-display)
+      - [Sidebar - ARIA :eyes:](#sidebar---aria-eyes)
+      - [Summary](#summary-1)
 
 ## Client vs. Server
 
@@ -555,7 +557,7 @@ The search function will span the client and server. When a user searches for an
   ```js
   for (const [key, value] of mySearchParams) {
   }
-  
+
   for (const [key, value] of mySearchParams.entries()) {
   }
   ```
@@ -719,7 +721,7 @@ As a general rule,
 
    ```js
    // components/ui/invoices/table.tsx
-   
+
    const invoices = await fetchFilteredInvoices(query, currentPage);
    ```
 
@@ -890,7 +892,7 @@ By validating on the server, you can:
 - Reduce the risk of malicious users bypassing client-side validation.
 - Have **one** source of truth for what is considered _valid_ data.
 
-#### `useActionState` hook
+#### `useActionState` hook on `<Form />`
 
 - Takes two arguments: `(action, initialState)`.
 - Returns two values: `[state, formAction]`
@@ -948,11 +950,13 @@ By validating on the server, you can:
 ```
 
 - `aria-describedby= customer-error`: This establishes a relationship between the `select` element and the error message container. It indicates that the container with `id=customer-error` describes the `select` element
+
   - Screen readers will read this description when the user interacts with the `select` box to notify them of errors
 
 - `id="customer-error"`: This `id` attribute uniquely identifies the HTML element that holds the error message for the `select` input.
 
 - `aria-live="polite"`: The screen reader should politely notify the user when the error inside the `div` is updated.
+
   - When the content changes (e.g. when a user corrects an error), the screen reader will announce these changes, but only when the user is idle so as not to interrupt them.
 
 - `aria-live`:
@@ -971,7 +975,6 @@ By validating on the server, you can:
 
     present the entire changed region as a whole, including the author-defined label if one exists.
 
-
 #### Sidebar - ARIA :eyes:
 
 - [Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
@@ -979,3 +982,13 @@ By validating on the server, you can:
 - A set of [roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) and [attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes) that define ways to make web content and web applications (especially those developed with JavaScript) more accessible to people with disabilities.
 - It supplements HTML so that interactions and widgets commonly used in applications can be passed to assistive technologies when there is not otherwise a mechanism. For example, ARIA enables accessible JavaScript widgets, form hints and error messages, live content updates, and more.
 
+#### Summary
+
+To all server-side form validation:
+
+1. Transform `<Form />` into a Client Component to use the `useActionState` hooks
+   1. This hook takes `action` and `initialState` and returns `[state, formAction]`
+2. Update form action: `<form action={formAction}>`, which calls the Server Action that validates the data and interact with the DB
+3. Add validation in Server Actions before sending anything to DB (`/lib/actions.ts`)
+4. Define the `State` type, in our case it was `{errors: {}, message: null}`.
+   1. It will be referenced in the `<Form />`
