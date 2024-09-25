@@ -5,7 +5,7 @@
   - [Project](#project)
     - [Create New Project](#create-new-project)
     - [Project Structure](#project-structure)
-  - [pnpm 1](#pnpm-1)
+  - [pnpm](#pnpm)
     - [Key Features of pnpm](#key-features-of-pnpm)
     - [Downsides of pnpm](#downsides-of-pnpm)
     - [Commands](#commands)
@@ -77,7 +77,11 @@
       - [Summary](#summary-1)
   - [Authentication](#authentication)
     - [Authentication vs. Authorization](#authentication-vs-authorization)
-    - [Auth.js](#authjs)
+  - [Auth.js](#authjs)
+    - [NextAuthConfig](#nextauthconfig)
+      - [`callbacks?`](#callbacks)
+      - [`authorized` callback](#authorized-callback)
+    - [Steps](#steps)
 
 ## Client vs. Server
 
@@ -111,7 +115,7 @@ $
 - `/public`: contains all the static assets for the application, such as images
 - **Config files**: such as `next.config.mjs`. Most are created by `create-next-app` and don't need to be modified.
 
-## pnpm [1]
+## [pnpm][1]
 
 pnpm (performant Node package manager) is a modern package manager for JavaScript that offers significant advantages over traditional tools like npm and Yarn. Here are the key features and benefits of using pnpm:
 
@@ -139,10 +143,7 @@ Overall, pnpm is a compelling choice for developers looking for a fast, efficien
 [1]: https://pnpm.io
 [2]: https://dev.to/sergioholgado/pnmp-package-manager-what-is-it-and-why-you-should-be-using-it-a-comprehensive-guide-4c66
 [3]: https://dev.to/stackblitz/what-is-pnpm-and-is-it-really-so-fast-and-space-efficient-29la
-[4]: https://www.reddit.com/r/node/comments/144xqd8/is_pnpm_really_leaves_up_to_its_hype_are_yarn_npm/
 [5]: https://github.com/pnpm/pnpm/actions/runs/8654953339/job/23733102312
-[6]: https://github.com/pnpm
-[7]: https://x.com/pnpmjs
 
 ### Commands
 
@@ -348,7 +349,7 @@ There are a few cases where you have to write database queries:
 
 By default, Next.js apps use **React Server Components**. Fetching data with Server Components is a relatively new approach and there are a few benefits of using them:
 
-- Server Components support promises, providing a simpler solution for asynchronous tasks like data fetching. You can use `async/await syntax `without reaching out for `useEffect`, `useState` or data fetching libraries.
+- Server Components support promises, providing a simpler solution for asynchronous tasks like data fetching. You can use `async/await syntax`without reaching out for `useEffect`, `useState` or data fetching libraries.
 - Server Components execute on the server, so you can keep expensive data fetches and logic on the server and only send the result to the client.
 - As mentioned before, since Server Components execute on the server, you can query the database directly without an additional API layer.
 
@@ -626,12 +627,14 @@ function handleSearch(term: string) {
 ```
 
 3. Keep the URL in sync with the input field
+
    ```js
    <input
      ...
      defaultValue={searchParams.get("query")?.toString()}
    />
    ```
+
 4. Update the table to reflect the search query
 
 **Summary**:
@@ -656,6 +659,7 @@ As a general rule,
 
 1. User puts text into the search bar
 2. the search bar is of `<input>` and has an event listener `onChange`
+
    ```js
    <input
      className="..."
@@ -665,6 +669,7 @@ As a general rule,
      }}
    />
    ```
+
 3. `e.target.value`, aka the search text is passed onto function `handleSearch(term: string)` as param `term`.
 
 4. `handleSearch()` determines how to set the query in the URL
@@ -1002,9 +1007,36 @@ To all server-side form validation:
 
 In Web Dev, authentication and authorization serve different roles:
 
-- **Authentication** is about making sure the user is <u>who they say they are</u>. You're proving your identity with something you have like a username and password
-- **Authorization** is the _next_ step. Once a user's identity is confirmed, authorization devices what parts of the application <u>they are allowed to use</u>.
+- **Authentication** is about making sure the user is <ins>who they say they are</ins>. You're proving your identity with something you have like a username and password
+- **Authorization** is the _next_ step. Once a user's identity is confirmed, authorization devices what parts of the application <ins>they are allowed to use</ins>.
 
-### Auth.js
+## [Auth.js][8]
 
-[`next-auth` Official Doc](https://authjs.dev/reference/nextjs)
+### [NextAuthConfig][9]
+
+#### `callbacks?`
+
+Callbacks are asynchronous functions you can use to <ins>control what happens when an auth-related action is performed</ins>. Callbacks allow you to implement **access controls** without a database or to integrate with external databases or APIs.
+
+#### `authorized` callback
+
+`authorized` callback is used to **verify if the request is authorized to access a page** via [Next.js Middleware][10]
+
+<!-- **params**: -->
+
+| Parameter        | Type                | Description                             |
+| ---------------- | ------------------- | --------------------------------------- |
+| `params`         | `Object`            | -                                       |
+| `params.auth`    | `null` \| `Session` | The authenticated user or token, if any |
+| `params.request` | `NextRequest`       | The request to be authorized.           |
+
+### Steps
+
+1. Install to project
+2. Adding the pages option
+3. Protecting routes with Middleware
+   1.
+
+[8]: https://authjs.dev/reference/nextjs
+[9]: https://authjs.dev/reference/nextjs#nextauthconfig
+[10]: https://nextjs.org/docs/app/building-your-application/routing/middleware
