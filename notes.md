@@ -6,9 +6,6 @@
     - [Create New Project](#create-new-project)
     - [Project Structure](#project-structure)
   - [pnpm](#pnpm)
-    - [Key Features of pnpm](#key-features-of-pnpm)
-    - [Downsides of pnpm](#downsides-of-pnpm)
-    - [Commands](#commands)
   - [CSS Styling](#css-styling)
     - [Tailwind CSS](#tailwind-css)
     - [CSS Modules](#css-modules)
@@ -60,7 +57,7 @@
       - [Creating an invoice](#creating-an-invoice)
       - [Updating an invoice](#updating-an-invoice)
       - [Deleting an invoice](#deleting-an-invoice)
-    - [Summary](#summary)
+    - [Mutating Data Summary](#mutating-data-summary)
   - [Error Handling](#error-handling)
     - [`try/catch`](#trycatch)
     - [`error.tsx`](#errortsx)
@@ -74,7 +71,7 @@
       - [Use `zod` to validate before DB insertion](#use-zod-to-validate-before-db-insertion)
       - [Add Error Display](#add-error-display)
       - [Sidebar - ARIA :eyes:](#sidebar---aria-eyes)
-      - [Summary](#summary-1)
+      - [Form Validation Summary](#form-validation-summary)
   - [Authentication](#authentication)
     - [Authentication vs. Authorization](#authentication-vs-authorization)
   - [Auth.js](#authjs)
@@ -88,7 +85,7 @@
 - We don't want to fetch from database from client components, because it will expose database secrets
 - Pages are usually server components from which we can make database requests and pass stuff to client components
 
-## [Project](https://nextjs.org/learn/dashboard-app/)
+## [Project][1]
 
 ### Create New Project
 
@@ -115,39 +112,9 @@ $
 - `/public`: contains all the static assets for the application, such as images
 - **Config files**: such as `next.config.mjs`. Most are created by `create-next-app` and don't need to be modified.
 
-## [pnpm][1]
+## [pnpm][2]
 
 pnpm (performant Node package manager) is a modern package manager for JavaScript that offers significant advantages over traditional tools like npm and Yarn. Here are the key features and benefits of using pnpm:
-
-### Key Features of pnpm
-
-1. **Speed and Efficiency**: pnpm is designed to be faster, often up to three times quicker than npm. This speed is achieved through its unique approach to package installation, which allows processes to run concurrently rather than sequentially. This means that pnpm can install dependencies independently, reducing overall installation time[2][3].
-
-2. **Disk Space Optimization**: Unlike npm, which duplicates package files across projects, pnpm uses a content-addressable filesystem to store all files in a central location. It creates symlinks to these files in each project, which drastically reduces disk space usage[4][5]. This method means that if multiple projects use the same package (like lodash), pnpm only stores one copy of that package, saving significant space.
-
-3. **Workspaces Support**: pnpm supports workspaces, allowing developers to manage multiple packages within a single repository efficiently. This feature is particularly useful for monorepos, as it ensures consistency across interdependent projects by installing dependencies for all workspaces from a single package.json file[2][3].
-
-4. **Pruning Unused Packages**: pnpm includes commands like `pnpm store prune`, which help manage the cache by removing unreferenced packages that are no longer needed. This keeps the storage clean and efficient over time[3].
-
-5. **Compatibility and Conversion**: While pnpm does not support npm's lock files directly due to its flat tree structure, it provides a command to convert npm and Yarn lock files into a pnpm-compatible format, easing migration for users switching from other package managers[2].
-
-### Downsides of pnpm
-
-While pnpm has many advantages, it does have some limitations:
-
-- **Lock File Compatibility**: pnpm does not natively support npm's lock files, which can complicate transitions from npm to pnpm for existing projects[2].
-- **Bundled Dependencies**: pnpm cannot publish packages with `bundledDependencies`, which is generally not recommended even in npm. Developers are encouraged to use a package bundler instead[2].
-
-Overall, pnpm is a compelling choice for developers looking for a fast, efficient, and space-saving package management solution, especially for large projects and monorepos. Its innovative approach to dependency management positions it as a strong alternative to npm and Yarn.
-
-[1]: https://pnpm.io
-[2]: https://dev.to/sergioholgado/pnmp-package-manager-what-is-it-and-why-you-should-be-using-it-a-comprehensive-guide-4c66
-[3]: https://dev.to/stackblitz/what-is-pnpm-and-is-it-really-so-fast-and-space-efficient-29la
-[5]: https://github.com/pnpm/pnpm/actions/runs/8654953339/job/23733102312
-
-### Commands
-
-- `pnpm i`: Install the project's packages
 
 ## CSS Styling
 
@@ -173,7 +140,7 @@ CSS Modules allow you tos cope CSS to a component by automatically creating uniq
 
 There may be cases where you may need to conditionally style an element based on state or some other condition.
 
-`clsx` is a library that lets you toggle class names easily. ([Documentation](https://github.com/lukeed/clsx)).
+`clsx` is a library that lets you toggle class names easily. ([Documentation][3]).
 Basic usage:
 
 - Suppose that you want to create an `InvoiceStatus` component which accepts `status`. the status can be `'pending'` or `'paid'`.
@@ -265,7 +232,7 @@ The `<Image>` component is an extension of the HTML `<img>` tag, and comes with 
 - Preventing layout shift automatically when images are loading.
 - Resizing images to avoid shipping large images to devices with a smaller viewport.
 - Lazy loading images by default (images load as they enter the viewport).
-- Serving images in modern formats, like [WebP](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#webp) and [AVIF](https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#avif_image), when the browser supports it.
+- Serving images in modern formats, like [WebP][4] and [AVIF][5], when the browser supports it.
 
 ## Layout and Pages
 
@@ -282,7 +249,7 @@ It will be automatically nested in a `<Layout />` as `{children}`
 
 ### `layout.tsx`
 
-One benefit is that on navigation, only the page components update while the layout won't re-render. This is called [partial rendering](https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering).
+One benefit is that on navigation, only the page components update while the layout won't re-render. This is called [partial rendering][6].
 
 ```js
 // app/dashboard/layout.tsx
@@ -338,7 +305,7 @@ APIS are an intermediary layer between your application code and database. There
 
 ### Database Queries
 
-When you're creating a full-stack application. you;ll also need to write logic to interact with your database. For relational databases like Postgres, you can do this with SQL or with an [ORM](https://vercel.com/docs/storage/vercel-postgres/using-an-orm).
+When you're creating a full-stack application. you;ll also need to write logic to interact with your database. For relational databases like Postgres, you can do this with SQL or with an [ORM][7].
 
 There are a few cases where you have to write database queries:
 
@@ -415,7 +382,7 @@ By using this pattern, you can:
 
 ### Static Rendering
 
-Data fetching and rendering happens on the server at build time (when you deploy) or when [revalidating data](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data).
+Data fetching and rendering happens on the server at build time (when you deploy) or when [revalidating data][8].
 
 Whenever a user visits the application, the cached result is served.
 **Benefits**:
@@ -461,10 +428,10 @@ export default function Loading() {
 }
 ```
 
-- Since `<SideNav>` is static, it's shown immediately. The user can interact with <SideNav> while the dynamic content is loading.
+- Since `<SideNav>` is static, it's shown immediately. The user can interact with `<SideNav>` while the dynamic content is loading.
 - The user doesn't have to wait for the page to finish loading before navigating away (this is called interruptable navigation).
 
-### [Route Groups](https://nextjs.org/docs/app/building-your-application/routing/route-groups)
+### [Route Groups][9]
 
 In the `app` directory, nested folders are normally mapped to URL paths. However, you can mark a folder as a Route Group to prevent the folder from being included in the route's URL path.
 
@@ -543,19 +510,19 @@ Where you place your suspense boundaries will vary depending on your application
 
 _\*Experimental feature in 14_
 
-In Next.js, if you call a [dynamic function](https://nextjs.org/docs/app/building-your-application/routing/route-handlers#dynamic-functions) in a route (like querying your database), the _entire_ route becomes dynamic.
+In Next.js, if you call a [dynamic function][10] in a route (like querying your database), the _entire_ route becomes dynamic.
 
 However, most routes are not fully static or dynamic.
 
 ## Search
 
-[Next.js tutorial](https://nextjs.org/learn/dashboard-app/adding-search-and-pagination)
+[Next.js tutorial][11]
 
 The search function will span the client and server. When a user searches for an invoice on the client, the URL params will be updated, data will be fetched on the server, and the table will re-render on the server with the new data.
 
 ### URL Search Params
 
-- `URLSearchParams` ([Doc](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams))
+- `URLSearchParams` ([Doc][12])
 - `URLSearchParams` objects are **iterable**, so they can directly be used in a `for...of` structure to iterate over key/value pairs in the same order as they appear in the query string, for example the following two lines are equivalent:
 
   ```js
@@ -578,7 +545,7 @@ The search function will span the client and server. When a user searches for an
   - For example, the search params for this URL `dashboard/invoices?page=1&query=pending` would look like this :`{page: '1', query: 'pending'}.`
 - **`usePathname`**: lets you read the current URL's pathname.
   - For example, for the route `/dashboard/invoices`, `usePathname` would return `/dashboard/invoices`.
-- **`useRouter`**: enables navigation between routes within client components programmatically. There are [multiple methods](https://nextjs.org/docs/app/api-reference/functions/use-router#userouter).
+- **`useRouter`**: enables navigation between routes within client components programmatically. There are [multiple methods][13].
   - `replace()`
     - similar to `push()`, but instead of adding a new entry in the browser's history (which happens with `push()`), it replaces the current entry. This means:
       - The new URL replaces the current URL without adding a new history entry.
@@ -607,24 +574,24 @@ The search function will span the client and server. When a user searches for an
 
 2. Update the URL with the search params
 
-- Instead of creating a complex string literal, you can use it to get the params string like `?page=1&query=a`.
+   - Instead of creating a complex string literal, you can use it to get the params string like `?page=1&query=a`.
 
-```js
-import { useSearchParams } from "next/navigation";
+   ```js
+   import { useSearchParams } from "next/navigation";
 
-const searchParams = useSearchParams();
-function handleSearch(term: string) {
-  const params = new URLSearchParams(searchParams);
+   const searchParams = useSearchParams();
+   function handleSearch(term: string) {
+     const params = new URLSearchParams(searchParams);
 
-  if (term) {
-    // If search is active, assign term to "query"
-    params.set("query", term);
-  } else {
-    // If term is empty, remove the "query" param
-    params.delete("query");
-  }
-}
-```
+     if (term) {
+       // If search is active, assign term to "query"
+       params.set("query", term);
+     } else {
+       // If term is empty, remove the "query" param
+       params.delete("query");
+     }
+   }
+   ```
 
 3. Keep the URL in sync with the input field
 
@@ -737,7 +704,7 @@ As a general rule,
 
 **Debouncing** is a programming practice that limits the rate at which a function can fire. In our case, you only want to query the database when the user has stopped typing.
 
-- `use-debounce` [library](https://www.npmjs.com/package/use-debounce)
+- `use-debounce` [library][14]
 
 #### How it works
 
@@ -779,11 +746,11 @@ export default function Page() {
 1. Create a form to capture the user's input.
 2. Create a Server Action and invoke it from the form - `/app/lib/actions.ts`
 3. Inside your Server Action, extract the data from the `formData` object
-   1. [Methods](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append)
+   1. [Methods][15]
 4. Validate and prepare the data to be inserted into your database.
-   1. [Zod](https://zod.dev/): a Typescript-first validation library that can simplify type validation)
+   1. [Zod][16]: a Typescript-first validation library that can simplify type validation)
 5. Insert the data and handle any errors.
-   1. `revalidatePath` to clear the cache and trigger a new request to the server. [Doc](https://nextjs.org/docs/app/api-reference/functions/revalidatePath)
+   1. `revalidatePath` to clear the cache and trigger a new request to the server. [Doc][17]
 6. Revalidate the cache and redirect the user back to invoices page.
 
 #### Updating an invoice
@@ -796,29 +763,29 @@ export default function Page() {
 
    1. Pass `id` to the server action: you **cannot** pass as an argument like this
 
-   ```js
-   // this is WRONG
-   <form action={updateInvoice(id)}
-   ```
+      ```js
+      // this is WRONG
+      <form action={updateInvoice(id)}
+      ```
 
    2. Instead, use JS `bind`. This will ensure that ny values passed to the Server Action are encoded.
 
-   ```js
-   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
-   return <form action={updateInvoiceWithId}></form>;
-   ```
+      ```js
+      const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+      return <form action={updateInvoiceWithId}></form>;
+      ```
 
 #### Deleting an invoice
 
 1. Pass `id` to `deleteInvoice` server action
 2. Create binding for `deleteInvoice` with `id`
 
-### Summary
+### Mutating Data Summary
 
 - Use Server Actions to mutate data
 - `revalidatePath` to revalidate the cache
 - `redirect` to redirect the user to a new page
-- _further reading_: [link](https://nextjs.org/blog/security-nextjs-server-components-actions)
+- _further reading_: [link][18]
 
 ## Error Handling
 
@@ -845,15 +812,15 @@ redirect("/dashboard/invoices");
 - It works by throwing an error, which would be caught by the `catch` block. Meaning an error reaches `redirect` as well.
 - To avoid this, call `redirect` **after** `try/catch` so it's only reachable if `try` succeeds
 
-### [`error.tsx`](https://nextjs.org/docs/app/api-reference/file-conventions/error)
+### [`error.tsx`][19]
 
 The file can be used to define a UI boundary for a route segment. It servers as a **catch-all** for unexpected errors and allows you to display a fallback UI to your users.
 
-[Example page](app/dashboard/invoices/error.tsx)
+[Example page][20]
 
 - `'use client'`: it needs to be a Client Component
 - It accepts two props
-  - `error`: this object is an instance of JS's native [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) **object**.
+  - `error`: this object is an instance of JS's native [`Error`][21] **object**.
   - `reset`: this is a **function** to reset the error boundary. When executed, the function will try to re-render the route segment.
 
 ### Handling `404` with `notFound` function
@@ -862,13 +829,13 @@ While `error.tsx` is useful for catching **all** errors, `notFound` can be used 
 
 `notFound` takes precedence over `error.tsx`.
 
-[Example `not-found.tsx`](/app/dashboard/invoices/[id]/edit/not-found.tsx)
+[Example `not-found.tsx`][22]
 
 ## Accessibility
 
-- [Tutorial](https://nextjs.org/learn/dashboard-app/improving-accessibility)
-- [`useActionState` hook](https://react.dev/reference/react/useActionState)
-- [`eslint-plugin-jsx-ally`](https://www.npmjs.com/package/eslint-plugin-jsx-a11y)
+- [Tutorial][23]
+- [`useActionState` hook][24]
+- [`eslint-plugin-jsx-ally`][25]
   - Catches accessibility issues early
   - For example, it warns if you have images without `alt` text, use the `aria-\*` and `role` attributes incorrectly,
 
@@ -973,24 +940,24 @@ By validating on the server, you can:
   2. **`assertive`**: Updates will be announced immediately, interrupting the user if necessary. This is used for critical updates that the user needs to be aware of right away.
   3. **`off`**: Updates will not be announced at all. This is useful for content that does not require user attention.
 
-- `aria-atomic`: indicates whether assistive technologies such as a screen reader will present all
+- [`aria-atomic`][26]: indicates whether assistive technologies such as a screen reader will present all
 
-  - [`false`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic#false) (default)
+  - `false` (default)
 
     present only the changed node or nodes.
 
-  - [`true`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic#true)
+  - `true`
 
     present the entire changed region as a whole, including the author-defined label if one exists.
 
 #### Sidebar - ARIA :eyes:
 
-- [Docs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA)
+- [Docs][27]
 - Accessible Rich Internet Applications
-- A set of [roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) and [attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes) that define ways to make web content and web applications (especially those developed with JavaScript) more accessible to people with disabilities.
+- A set of [roles][28] and [attributes][29] that define ways to make web content and web applications (especially those developed with JavaScript) more accessible to people with disabilities.
 - It supplements HTML so that interactions and widgets commonly used in applications can be passed to assistive technologies when there is not otherwise a mechanism. For example, ARIA enables accessible JavaScript widgets, form hints and error messages, live content updates, and more.
 
-#### Summary
+#### Form Validation Summary
 
 To all server-side form validation:
 
@@ -1010,9 +977,9 @@ In Web Dev, authentication and authorization serve different roles:
 - **Authentication** is about making sure the user is <ins>who they say they are</ins>. You're proving your identity with something you have like a username and password
 - **Authorization** is the _next_ step. Once a user's identity is confirmed, authorization devices what parts of the application <ins>they are allowed to use</ins>.
 
-## [Auth.js][8]
+## [Auth.js][30]
 
-### [NextAuthConfig][9]
+### [NextAuthConfig][31]
 
 #### `callbacks?`
 
@@ -1020,7 +987,7 @@ Callbacks are asynchronous functions you can use to <ins>control what happens wh
 
 #### `authorized` callback
 
-`authorized` callback is used to **verify if the request is authorized to access a page** via [Next.js Middleware][10]
+`authorized` callback is used to **verify if the request is authorized to access a page** via [Next.js Middleware][32]
 
 <!-- **params**: -->
 
@@ -1037,6 +1004,36 @@ Callbacks are asynchronous functions you can use to <ins>control what happens wh
 3. Protecting routes with Middleware
    1.
 
-[8]: https://authjs.dev/reference/nextjs
-[9]: https://authjs.dev/reference/nextjs#nextauthconfig
-[10]: https://nextjs.org/docs/app/building-your-application/routing/middleware
+[1]: https://nextjs.org/learn/dashboard-app/
+[2]: https://pnpm.io
+[3]: https://github.com/lukeed/clsx
+[4]: https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#webp
+[5]: https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types#avif_image
+[6]: https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#4-partial-rendering
+[7]: https://vercel.com/docs/storage/vercel-postgres/using-an-orm
+[8]: https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data
+[9]: https://nextjs.org/docs/app/building-your-application/routing/route-groups
+[10]: https://nextjs.org/docs/app/building-your-application/routing/route-handlers#dynamic-functions
+[11]: https://nextjs.org/learn/dashboard-app/adding-search-and-pagination
+[12]: https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+[13]: https://nextjs.org/docs/app/api-reference/functions/use-router#userouter
+[14]: https://www.npmjs.com/package/use-debounce
+[15]: https://developer.mozilla.org/en-US/docs/Web/API/FormData/append
+[16]: https://zod.dev/
+[17]: https://nextjs.org/docs/app/api-reference/functions/revalidatePath
+[18]: https://nextjs.org/blog/security-nextjs-server-components-actions
+[19]: https://nextjs.org/docs/app/api-reference/file-conventions/error
+[20]: app/dashboard/invoices/error.tsx
+[21]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error
+
+[22]: /app/dashboard/invoices/[id]/edit/not-found.tsx
+[23]: https://nextjs.org/learn/dashboard-app/improving-accessibility
+[24]: https://react.dev/reference/react/useActionState
+[25]: https://www.npmjs.com/package/eslint-plugin-jsx-a11y
+[26]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-atomic
+[27]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA
+[28]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles
+[29]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+[30]: https://authjs.dev/reference/nextjs
+[31]: https://authjs.dev/reference/nextjs#nextauthconfig
+[32]:https://nextjs.org/docs/app/building-your-application/routing/middleware
