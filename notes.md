@@ -75,6 +75,9 @@
       - [Add Error Display](#add-error-display)
       - [Sidebar - ARIA :eyes:](#sidebar---aria-eyes)
       - [Summary](#summary-1)
+  - [Authentication](#authentication)
+    - [Authentication vs. Authorization](#authentication-vs-authorization)
+    - [Auth.js](#authjs)
 
 ## Client vs. Server
 
@@ -992,3 +995,16 @@ To all server-side form validation:
 3. Add validation in Server Actions before sending anything to DB (`/lib/actions.ts`)
 4. Define the `State` type, in our case it was `{errors: {}, message: null}`.
    1. It will be referenced in the `<Form />`
+
+## Authentication
+
+### Authentication vs. Authorization
+
+In Web Dev, authentication and authorization serve different roles:
+
+- **Authentication** is about making sure the user is <u>who they say they are</u>. You're proving your identity with something you have like a username and password
+- **Authorization** is the _next_ step. Once a user's identity is confirmed, authorization devices what parts of the application <u>they are allowed to use</u>.
+
+### Auth.js
+
+[`next-auth` Official Doc](https://authjs.dev/reference/nextjs)
