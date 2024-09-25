@@ -769,3 +769,17 @@ export default function Page() {
 3. Fetch the specific invoice from your database.
 4. Pre-populate the form with the invoice data.
 5. Update the invoice data in your database.
+
+   1. Pass `id` to the server action: you **cannot** pass as an argument like this
+
+   ```js
+   // this is WRONG
+   <form action={updateInvoice(id)}
+   ```
+
+   2. Instead, use JS `bind`. This will ensure that ny values passed to the Server Action are encoded.
+
+   ```js
+   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+   return <form action={updateInvoiceWithId}></form>;
+   ```
