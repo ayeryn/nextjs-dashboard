@@ -78,6 +78,8 @@
     - [NextAuthConfig](#nextauthconfig)
       - [`callbacks?`](#callbacks)
       - [`authorized` callback](#authorized-callback)
+    - [Password Hashing](#password-hashing)
+    - [Credentials provider](#credentials-provider)
     - [Steps](#steps)
 
 ## Client vs. Server
@@ -989,20 +991,23 @@ Callbacks are asynchronous functions you can use to <ins>control what happens wh
 
 `authorized` callback is used to **verify if the request is authorized to access a page** via [Next.js Middleware][32]
 
-<!-- **params**: -->
-
 | Parameter        | Type                | Description                             |
 | ---------------- | ------------------- | --------------------------------------- |
 | `params`         | `Object`            | -                                       |
 | `params.auth`    | `null` \| `Session` | The authenticated user or token, if any |
 | `params.request` | `NextRequest`       | The request to be authorized.           |
 
+### Password Hashing
+
+### [Credentials provider][33]
+
+
 ### Steps
 
 1. Install to project
 2. Adding the pages option
 3. Protecting routes with Middleware
-   1.
+4. Add providers
 
 [1]: https://nextjs.org/learn/dashboard-app/
 [2]: https://pnpm.io
@@ -1036,4 +1041,5 @@ Callbacks are asynchronous functions you can use to <ins>control what happens wh
 [29]: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
 [30]: https://authjs.dev/reference/nextjs
 [31]: https://authjs.dev/reference/nextjs#nextauthconfig
-[32]:https://nextjs.org/docs/app/building-your-application/routing/middleware
+[32]: https://nextjs.org/docs/app/building-your-application/routing/middleware
+[33]: https://authjs.dev/getting-started/providers/credentials-tutorial
