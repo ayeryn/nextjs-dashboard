@@ -60,6 +60,7 @@
       - [Creating an invoice](#creating-an-invoice)
       - [Updating an invoice](#updating-an-invoice)
       - [Deleting an invoice](#deleting-an-invoice)
+    - [Summary](#summary)
 
 ## Client vs. Server
 
@@ -789,3 +790,10 @@ export default function Page() {
 
 1. Pass `id` to `deleteInvoice` server action
 2. Create binding for `deleteInvoice` with `id`
+
+### Summary
+
+- Use Server Actions to mutate data
+- `revalidatePath` to revalidate the cache
+- `redirect` to redirect the user to a new page
+- _further reading_: [link](https://nextjs.org/blog/security-nextjs-server-components-actions)
