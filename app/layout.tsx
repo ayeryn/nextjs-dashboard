@@ -1,5 +1,14 @@
 import "@/app/ui/global.css";
 import { inter } from "./ui/fonts";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  // This will be automatically added to the web app
+  title: "NextJS Dashboard",
+  description: "This is a NextJS 14 project with typescript",
+  metadataBase: new URL("https://next-learn-dashboard.vercel.sh'"),
+};
+
 export default function RootLayout({
   children,
 }: {

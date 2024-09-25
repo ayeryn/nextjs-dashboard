@@ -84,6 +84,8 @@
   - [Metadata](#metadata)
     - [Common Types](#common-types)
     - [Adding Metadata](#adding-metadata)
+      - [Config-based](#config-based)
+      - [File-based](#file-based)
 
 ## Client vs. Server
 
@@ -1033,12 +1035,23 @@ Proper metadata helps search engines effectively index webpages, improving their
 
 ### Adding Metadata
 
-1. **Config-based**: Export a [static `metadata` object][34] or a dynamic [`generateMetadata` function][35] in a `layout.js` or `page.js` file.
-2. **File-based**: specials files like:
-   1. `favicon.ico`, `apple-icon.jpg`, and `icon.jpg`: Utilized for favicons and icons
-   2. `opengraph-image.jpg` and `twitter-image.jpg`: Employed for social media images
-   3. `robots.txt`: Provides instructions for search engine crawling
-   4. `sitemap.xml`: Offers information about the website's structure
+#### Config-based
+
+Export a [static `metadata` object][34] or a dynamic [`generateMetadata` function][35] in a `layout.js` or `page.js` file.
+
+- Automatically adds metadata to the application
+- Ability to add a custom title for a specific page
+  - Add a `metadata` object to the page itself
+- Metadata in nested pages will override the metadata in the parent
+
+#### File-based
+
+Specials files like:
+
+1. `favicon.ico`, `apple-icon.jpg`, and `icon.jpg`: Utilized for favicons and icons
+2. `opengraph-image.jpg` and `twitter-image.jpg`: Employed for social media images
+3. `robots.txt`: Provides instructions for search engine crawling
+4. `sitemap.xml`: Offers information about the website's structure
 
 [1]: https://nextjs.org/learn/dashboard-app/
 [2]: https://pnpm.io
