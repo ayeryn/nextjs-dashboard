@@ -1,6 +1,7 @@
 # Notes
 
 - [Notes](#notes)
+  - [Client vs. Server](#client-vs-server)
   - [Project](#project)
     - [Create New Project](#create-new-project)
     - [Project Structure](#project-structure)
@@ -53,6 +54,12 @@
       - [Actions](#actions)
     - [Debouncing](#debouncing)
       - [How it works](#how-it-works)
+  - [Pagination](#pagination)
+
+## Client vs. Server
+
+- We don't want to fetch from database from client components, because it will expose database secrets
+- Pages are usually server components from which we can make database requests and pass stuff to client components
 
 ## Project
 
@@ -709,3 +716,5 @@ As a general rule,
 1. **Trigger Event**: When an event that should be debounced (like a keystroke in the search box) occurs, a timer starts.
 2. **Wait**: If a new event occurs before the timer expires, the timer is reset.
 3. **Execution**: If the time reaches the end of its countdown, the debounced function is executed.
+
+## Pagination
