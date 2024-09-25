@@ -1,3 +1,4 @@
+import { fetchCustomers, fetchInvoiceById } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import Form from "@/app/ui/invoices/edit-form";
 
@@ -7,6 +8,10 @@ export default async function EditInvoice({
   params: { id: string };
 }) {
   const id = params.id;
+  const [invoice, customers] = await Promise.all([
+    fetchInvoiceById(id),
+    fetchCustomers(),
+  ]);
   return (
     <main>
       <Breadcrumbs
@@ -19,7 +24,7 @@ export default async function EditInvoice({
           },
         ]}
       />
-      {/* <Form invoice={invoice} customers={customer} /> */}
+      <Form invoice={invoice} customers={customers} />
     </main>
   );
 }
