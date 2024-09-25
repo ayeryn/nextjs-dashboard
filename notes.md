@@ -1001,6 +1001,12 @@ Callbacks are asynchronous functions you can use to <ins>control what happens wh
 
 ### [Credentials provider][33]
 
+1. Write auth logic
+   1. `auth.config.ts`
+   2. `auth.ts`
+2. Add Middleware - `middleware.ts`
+3. Connect the auth logic with login form
+   1. `login-form.tsx`
 
 ### Steps
 
