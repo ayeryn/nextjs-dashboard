@@ -754,6 +754,7 @@ export default function Page() {
 1. Create a form to capture the user's input.
 2. Create a Server Action and invoke it from the form - `/app/lib/actions.ts`
 3. Inside your Server Action, extract the data from the `formData` object
+   1. [Methods](https://developer.mozilla.org/en-US/docs/Web/API/FormData/append)
 4. Validate and prepare the data to be inserted into your database.
 5. Insert the data and handle any errors.
 6. Revalidate the cache and redirect the user back to invoices page.
